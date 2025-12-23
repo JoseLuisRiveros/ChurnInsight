@@ -6,8 +6,7 @@ import org.springframework.web.client.RestTemplate;
 
 /**
  * Configuración mínima para exponer un RestTemplate como bean.
- * Usamos RestTemplate por simplicidad (apto para un MVP).
- * Si prefieren WebClient (reactivo) pueden cambiarlo luego.
+ * Uso RestTemplate por simplicidad
  */
 @Configuration
 public class RestTemplateConfig {
