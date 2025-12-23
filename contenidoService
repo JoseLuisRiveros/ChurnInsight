@@ -1,0 +1,96 @@
+# Capa Service – Backend ChurnInsight
+
+RestTemplateConfig
+
+Descripción
+`RestTemplateConfig` es una **clase de configuración** de Spring Boot.
+Su única responsabilidad es proveer un cliente HTTP reutilizable para todo el proyecto.
+
+Propósito
+Permitir que otros servicios puedan comunicarse con APIs externas
+(en este caso, la API de Machine Learning en Python) sin crear instancias manuales de `RestTemplate`.
+
+Funcionamiento
+Se define un `RestTemplate` como un Bean administrado por Spring, lo que permite inyectarlo mediante `@Autowired`.
+
+@Bean
+public RestTemplate restTemplate() {
+    return new RestTemplate();
+}
+
+Centraliza la creación del cliente HTTP
+
+Facilita el mantenimiento y las pruebas
+
+Evita código duplicado
+
+2️⃣ ModelIntegrationService
+Descripción
+ModelIntegrationService es el servicio encargado de la integración entre el backend Java y el modelo de Machine Learning en Python.
+
+Propósito
+Actuar como intermediario entre Spring Boot y la API Python que devuelve la probabilidad de churn.
+
+Responsabilidades
+Recibir los datos del cliente (CustomerRequest)
+
+Enviar esos datos a la API de ML mediante RestTemplate
+
+Recibir la respuesta del modelo
+
+Devolver la probabilidad de churn al servicio de negocio
+
+Qué hace
+Comunicación HTTP con el servicio externo
+
+Manejo de errores de integración
+
+Aisla al backend de los detalles del modelo
+
+3️⃣ PredictionService
+Descripción
+PredictionService es el servicio principal de la lógica de negocio del backend.
+
+Propósito
+Interpretar el resultado del modelo de Machine Learning y transformarlo en una respuesta clara y entendible para el cliente.
+
+Responsabilidades
+Recibir los datos del cliente ya validados
+
+Llamar al ModelIntegrationService
+
+Obtener la probabilidad de churn
+
+Aplicar reglas de negocio (por ejemplo, umbrales de riesgo)
+
+Construir el objeto PredictionResponse
+
+(Opcional) Persistir la predicción
+
+Qué hace
+Orquesta el flujo completo de predicción
+
+Separa reglas de negocio de la integración técnica
+
+Centraliza la lógica del sistema
+
+
+Flujo general del sistema
+
+Controller
+   ↓
+PredictionService
+   ↓
+ModelIntegrationService
+   ↓
+API Python (Machine Learning)
+RestTemplateConfig es utilizado de forma transversal para proveer el cliente HTTP necesario.
+
+Resumen de responsabilidades
+Componente
+RestTemplateConfig	Configuración del cliente HTTP
+ModelIntegrationService	Integración con el modelo ML
+PredictionService	Lógica de negocio y respuesta final
+
+Esta estructura permite mantener el backend desacoplado del modelo de Machine Learning, facilitando el mantenimiento,
+la escalabilidad y la comprensión del sistema.
