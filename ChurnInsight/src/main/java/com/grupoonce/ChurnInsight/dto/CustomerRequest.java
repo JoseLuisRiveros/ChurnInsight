@@ -1,49 +1,55 @@
-package com.grupoonce.ChurnInsight.dto;
-
 package com.churninsight.dto;
 
 import jakarta.validation.constraints.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jdk.jfr.DataAmount;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CustomerRequest {
 
-    @NotBlank(message = "El customer_id es obligatorio")
+    @NotBlank(message = "customer_id es requerido")
     @JsonProperty("customer_id")
     private String customerId;
 
-    @NotNull(message = "El tenure_months es obligatorio")
-    @Min(value = 0, message = "El tenure_months debe ser mayor o igual a 0")
-    @JsonProperty("tenure_months")
-    private Integer tenureMonths;
+    @NotNull(message = "tenure es requerido")
+    @Min(value = 0, message = "tenure debe ser mayor o igual a 0")
+    @JsonProperty("tenure")
+    private Integer tenure;
 
-    @NotNull(message = "El monthly_charges es obligatorio")
-    @Positive(message = "El monthly_charges debe ser positivo")
-    @JsonProperty("monthly_charges")
-    private Double monthlyCharges;
-
-    @NotNull(message = "El total_charges es obligatorio")
-    @Positive(message = "El total_charges debe ser positivo")
-    @JsonProperty("total_charges")
-    private Double totalCharges;
-
-    @NotNull(message = "El payment_delays es obligatorio")
-    @Min(value = 0, message = "El payment_delays debe ser mayor o igual a 0")
-    @JsonProperty("payment_delays")
-    private Integer paymentDelays;
-
-    @NotNull(message = "El avg_monthly_usage_hours es obligatorio")
-    @PositiveOrZero(message = "El avg_monthly_usage_hours debe ser mayor o igual a 0")
-    @JsonProperty("avg_monthly_usage_hours")
-    private Double avgMonthlyUsageHours;
-
-    @NotBlank(message = "El plan_type es obligatorio")
-    @JsonProperty("plan_type")
-    private String planType;
-
-    @NotBlank(message = "El contract_type es obligatorio")
+    @NotBlank(message = "contract_type es requerido")
     @JsonProperty("contract_type")
     private String contractType;
+
+    @NotBlank(message = "subscription_type es requerido")
+    @JsonProperty("subscription_type")
+    private String subscriptionType;
+
+    @NotNull(message = "usage_time es requerido")
+    @PositiveOrZero(message = "usage_time debe ser mayor o igual a 0")
+    @JsonProperty("usage_time")
+    private Double usageTime;
+
+    @NotNull(message = "login_frequency es requerido")
+    @Min(value = 0, message = "login_frequency debe ser mayor o igual a 0")
+    @JsonProperty("login_frequency")
+    private Integer loginFrequency;
+
+    @NotNull(message = "payment_record es requerido")
+    @Min(value = 0, message = "payment_record debe ser mayor o igual a 0")
+    @JsonProperty("payment_record")
+    private Integer paymentRecord;
+
+    @NotNull(message = "total_spend es requerido")
+    @Positive(message = "total_spend debe ser positivo")
+    @JsonProperty("total_spend")
+    private Double totalSpend;
+
+    @NotNull(message = "churn es requerido")
+    @Pattern(regexp = "[01]", message = "churn debe ser '0' o '1'")
+    @JsonProperty("churn")
+    private String churn;  // "0" o "1"
 }
